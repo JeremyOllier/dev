@@ -1,0 +1,64 @@
+def analyze_numbers(numbers):
+    """
+    Analyse une liste de nombres et retourne un dictionnaire contenant :
+    - la moyenne
+    - la médiane
+    - la valeur minimale
+    - la valeur maximale
+    """
+
+
+    # Vérifie que la liste n'est pas vide
+    if not numbers:
+        raise ValueError("La liste est vide.")
+
+
+    # Vérifie que tous les éléments sont des nombres (int ou float)
+    for n in numbers:
+        if not isinstance(n, (int, float)):
+            raise TypeError(f"Valeur non numérique détectée : {n}")
+
+
+    # Trie la liste pour le calcul de la médiane
+    sorted_numbers = sorted(numbers)
+    n = len(sorted_numbers)
+
+
+    # Calcul de la moyenne
+    moyenne = sum(sorted_numbers) / n
+
+
+    # Calcul de la médiane
+    if n % 2 == 1:
+        mediane = sorted_numbers[n // 2]
+    else:
+        milieu1 = sorted_numbers[n // 2 - 1]
+        milieu2 = sorted_numbers[n // 2]
+        mediane = (milieu1 + milieu2) / 2
+
+
+    # Valeur minimale et maximale
+    valeur_min = sorted_numbers[0]
+    valeur_max = sorted_numbers[-1]
+
+
+    # Construction du dictionnaire de résultats
+    resultats = {
+        "moyenne": moyenne,
+        "médiane": mediane,
+        "minimum": valeur_min,
+        "maximum": valeur_max
+    }
+
+
+    return resultats
+
+
+# Exemple d'utilisation avec la liste [10, 2, 8, 4]
+if __name__ == "__main__":
+    liste = [10, 2, 8, 4]
+    try:
+        stats = analyze_numbers(liste)
+        print("Résultats de l'analyse :", stats)
+    except (ValueError, TypeError) as e:
+        print("Erreur :", e)
